@@ -11,6 +11,7 @@
     transform: translateY(50vh);
     -webkit-transition: transform .4s ease-out !important;
     z-index: 99 !important;
+    font-weight: bold;
 }
 
 .signinmodal-component.open {
@@ -19,14 +20,15 @@
 
 .signinwithgoogle{
     padding: 20px;
-    border: 1px solid $grey;
+    border: 1px solid $black;
     border-radius: 5px;
 }
 
 .cancel{
     padding: 20px;
-    margin-top: 80px;
-    border: 1px solid $grey;
+    margin-top: 75px;
+    border: 1px solid $black;
     border-radius: 5px;
+    color: $red;
     // margin-top: 10px;
 }

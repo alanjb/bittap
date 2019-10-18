@@ -22,7 +22,10 @@ export default class Landing extends React.Component{
     render() {    
         return (
           <div className="Landing-Component">
-            <h1 className="large-header">Engage with the Blockchain</h1>
+              <Container>
+                <h1 className="large-header">Engage with the Blockchain</h1>
+              </Container>
+          
           </div>
         );
     }
