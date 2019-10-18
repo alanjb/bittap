@@ -1,6 +1,8 @@
 import React from 'react';
 import BittapLogo from '../assets/BittapLogo';
 import MenuButton from '../assets/MenuButton';
+import {Button} from 'reactstrap';
+import SignInModal from './SignInModal';
 // import PiXIcon from '../../components/assets/PiXIcon';
 // import SearchBar from '../layout/SearchBar';
 // import NavPanel from '../layout/NavPanel';
@@ -19,14 +21,15 @@ class Navbar extends React.Component{
   }
 
   state = {
-    isNavPanelOpen: false,
-    isFeedbackOpen: false, 
+    isSignInModalOpen: false,
+    isNavPanelOpen: false
     // items: menuItemsArray
   };
 
   toggle() {
     let screenWidth = window.screen.width;
     let innerWidth = window.innerWidth;
+    console.log('clicked');
     if(screenWidth<maxScreenWidthForNavPanel || innerWidth<maxScreenWidthForNavPanel ){
       this.setState((prevState) => {
         return {
@@ -36,17 +39,30 @@ class Navbar extends React.Component{
     }
   }
 
+  toggleSignIn = () => {
+    this.setState((prevState) => {
+      return {
+        isSignInModalOpen: !prevState.isSignInModalOpen
+      }
+    });
+    console.log('State:' + this.state.isSignInModalOpen);
+  }
+
   render(){
-    const { isNavPanelOpen } = this.state;
+    const { isSignInModalOpen } = this.state;
     const { items } = this.state;
     return(
-      // <div className="top-gradient"></div>
+      <React.Fragment>
       <div className="Navbar-Component">
-      <div className="top-gradient"></div>
+        <div className="top-gradient"></div>
           <div> <BittapLogo/> </div>
-          <div> <MenuButton/> </div>
-
-      </div>
+          <div className="nav-buttons"> 
+            <Button outline="false" onClick={() => this.toggleSignIn()}>Sign in</Button>
+            <MenuButton toggleNavPanel={() => this.toggle()}/> 
+          </div>
+      </div>  
+        <SignInModal isOpen={isSignInModalOpen}/>
+      </React.Fragment>
     );
   }
 }

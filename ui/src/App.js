@@ -6,6 +6,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
+import { Container, Row, Col } from "reactstrap";
 // import IndexSidePanel from './components/articles/IndexSidePanel';
 
 class App extends React.Component {
@@ -13,17 +14,21 @@ class App extends React.Component {
     return(
       <Router>
          <React.Fragment>
-          <div className="navigation">
-            <Navbar/>
-          </div>
-          <div className="body">
-            <div className="main">
-              <Switch>
-                <Route exact path="/" component={Landing} />    
-                <Route path="/dashboard" component={Dashboard} />    
-              </Switch>
+          <div className="app">
+            <Row>
+              <Col>
+                  <Navbar/>
+              </Col>
+            </Row>
+                <Row>
+                  <Col>
+                    <Switch>
+                      {/* <Route exact path="/" component={Landing} />     */}
+                      {/* <Route path="/dashboard" component={Dashboard} /> */}                      
+                    </Switch>
+                  </Col>
+                </Row>
             </div>
-          </div>
         </React.Fragment>
       </Router>
     );  

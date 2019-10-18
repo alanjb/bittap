@@ -1,0 +1,32 @@
+@import './abstract/variables'; 
+
+.signinmodal-component { 
+    // display: none;
+    // top: 35vh;
+    position: absolute;
+    text-align: center;
+    left: 2vh;
+    right: 2vh;
+    border: none;
+    transform: translateY(50vh);
+    -webkit-transition: transform .4s ease-out !important;
+    z-index: 99 !important;
+}
+
+.signinmodal-component.open {
+    transform: translateY(15vh) !important;
+}
+
+.signinwithgoogle{
+    padding: 20px;
+    border: 1px solid $grey;
+    border-radius: 5px;
+}
+
+.cancel{
+    padding: 20px;
+    margin-top: 80px;
+    border: 1px solid $grey;
+    border-radius: 5px;
+    // margin-top: 10px;
+}
