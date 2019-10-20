@@ -45,7 +45,6 @@ class Navbar extends React.Component{
         isSignInModalOpen: !prevState.isSignInModalOpen
       }
     });
-    console.log('State:' + this.state.isSignInModalOpen);
   }
 
   render(){
@@ -57,7 +56,7 @@ class Navbar extends React.Component{
         <div className="top-gradient"></div>
           <div> <BittapLogo/> </div>
           <div className="nav-buttons"> 
-            <Button outline="false" onClick={() => this.toggleSignIn()}>Sign in</Button>
+            <Button outline onClick={() => this.toggleSignIn()}>Sign in</Button>
             <MenuButton toggleNavPanel={() => this.toggle()}/> 
           </div>
       </div>  

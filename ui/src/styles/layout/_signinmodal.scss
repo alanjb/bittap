@@ -3,25 +3,27 @@
 .signinmodal-component { 
     // display: none;
     // top: 35vh;
-    position: absolute;
+    position: fixed !important;
     text-align: center;
     left: 2vh;
     right: 2vh;
     border: none;
-    transform: translateY(50vh);
+    transform: translateY(55vh);
     -webkit-transition: transform .4s ease-out !important;
     z-index: 99 !important;
     font-weight: bold;
 }
 
 .signinmodal-component.open {
-    transform: translateY(15vh) !important;
+    transform: translateY(8vh) !important;
+    display: block;
 }
 
 .signinwithgoogle{
     padding: 20px;
     border: 1px solid $black;
     border-radius: 5px;
+    display: block;
 }
 
 .cancel{
@@ -30,5 +32,5 @@
     border: 1px solid $black;
     border-radius: 5px;
     color: $red;
-    // margin-top: 10px;
+    display: block;
 }
