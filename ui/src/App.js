@@ -24,7 +24,7 @@ class App extends React.Component {
                   <Col>
                     <Switch>
                       <Route exact path="/" component={Landing} />    
-                      {/* <Route path="/dashboard" component={Dashboard} /> */}                      
+                      <Route path="/dashboard" component={Dashboard} />                      
                     </Switch>
                   </Col>
                 </Row>

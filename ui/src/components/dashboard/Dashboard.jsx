@@ -32,14 +32,9 @@ class Dashboard extends React.Component{
       <div className="Dashboard-Component">
         <Container>
           <div>
-            {response
-              ? <p>
-                Total power usage is: {response} 
-                </p>
-              : <p>Loading...</p>
-            }
+            
           </div>
-          <a href="#" onclick="signOut();">Sign out</a>
+          {/* <a href="#" onclick="signOut();">Sign out</a> */}
         </Container>
       </div>
     );
