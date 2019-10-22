@@ -1,0 +1,19 @@
+@import './abstract/variables';  
+
+.servercard{
+    border: 1px solid $light-grey;
+    margin-left: -25px !important;
+    margin-right: -25px !important;
+}
+
+.card{
+    border: none !important;
+}
+
+.card-body{
+   height: 300px;
+}
+
+.input-group{
+    margin-bottom: 20px;
+}
