@@ -36,17 +36,17 @@ class Dashboard extends React.Component{
           <div>
             <InputGroup>
               <Input placeholder="Filter" />
-              <Button color="primary" size="lg" active>+</Button>{' '}
+              {/* <Button color="primary" size="lg" active>+</Button>{' '} */}
             </InputGroup>
           </div>
-
           <ServerCard/>
           <ServerCard/>
           <ServerCard/>
-          
-
-
-          
+          <ServerCard/>
+          <ServerCard/>
+          <ServerCard/>
+          <ServerCard/>
+          <ServerCard/>
           {/* <a href="#" onclick="signOut();">Sign out</a> */}
         </Container>
       </div>

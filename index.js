@@ -11,10 +11,10 @@ const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 
 const app = express();
 
-var oktaClient = new okta.Client({
+let oktaClient = new okta.Client({
     orgUrl: 'https://dev-110361.okta.com',
     token: '009BGldlOf_3WGo17fW3JYcyud1cr8l6GG4wCRmCeC'
-  });
+});
   
   const oidc = new ExpressOIDC({
     issuer: "https://dev-110361.okta.com/oauth2/default",
@@ -44,7 +44,7 @@ require('custom-env').env();
 require('dotenv').config({path: __dirname + '/.env'});
 const cors = require('cors');
 
-const PORT = process.env.PORT || 8080;
+
 
 // conntect to database
 connectDB();
@@ -120,7 +120,6 @@ function loginRequired(req, res, next) {
 if (!req.user) {
     return res.status(401).render("Unauthenticated User...");
 }
-
 next();
 }
 
@@ -139,6 +138,8 @@ io.on('connection', socket => {
       });
 });
 
-server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+const PORT = process.env.PORT;
+
+server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
 
 module.exports = app;

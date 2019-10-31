@@ -1,25 +1,31 @@
 import React, { useState } from 'react';
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
+import ButtonSwitch from './ButtonSwitch';
 
 const Example = (props) => {
   const [collapse, setCollapse] = useState(false);
-
   const toggle = () => setCollapse(!collapse);
 
   return (
-    <div className="servercard">
-      <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>
-      <Collapse isOpen={collapse} >
-        <Card>
-          <CardBody>
-          Anim pariatur cliche reprehenderit,
-           enim eiusmod high life accusamus terry richardson ad squid. Nihil
-           anim keffiyeh helvetica, craft beer labore wes anderson cred
-           nesciunt sapiente ea proident.
-          </CardBody>
-        </Card>
-      </Collapse>
+    <div className="servercard" onClick={toggle}>
+      <span className="server-card-header">Server_Alpha</span>
+      <ButtonSwitch/>
+      <div>
+    <Collapse isOpen={collapse}>  
+      <Card>
+        <CardBody>
+          {/* Anim pariatur cliche reprehenderit,
+          enim eiusmod high life accusamus terry richardson ad squid. Nihil
+          anim keffiyeh helvetica, craft beer labore wes anderson cred
+          nesciunt sapiente ea proident. */}
+        </CardBody>
+      </Card>
+     </Collapse>
     </div>
+      
+    </div>
+
+
   );
 }
 
