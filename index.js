@@ -138,7 +138,8 @@ io.on('connection', socket => {
       });
 });
 
-const PORT = process.env.PORT;
+// normalizePort is a safeguard function if port value is NaN or false
+const PORT = normalizePort(process.env.PORT);
 
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
 
