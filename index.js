@@ -5,11 +5,14 @@ const socketIO = require("socket.io");
 const createError = require('http-errors');
 const logger = require('morgan');
 const session = require("express-session");
+const normalizePort = require('normalize-port');
 
 const okta = require("@okta/okta-sdk-nodejs");
 const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 
 const app = express();
+
+require('dotenv').config({silent: true});
 
 let oktaClient = new okta.Client({
     orgUrl: 'https://dev-110361.okta.com',
@@ -62,8 +65,8 @@ app.use(session({
   resave: true,
   saveUninitialized: false
 }));
-app.use(oidc.router);
 
+app.use(oidc.router);
 app.use((req, res, next) => {
     if (!req.userinfo) {
       return next();
@@ -139,7 +142,7 @@ io.on('connection', socket => {
 });
 
 // normalizePort is a safeguard function if port value is NaN or false
-const PORT = normalizePort(process.env.PORT);
+const PORT = normalizePort(process.env.PORT || 8080);
 
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
 
