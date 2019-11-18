@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
-const User = require('../models/User');
+const User = require('../../models/User');
 
 //https://developer.okta.com/blog/2018/08/17/build-and-understand-user-authentication-in-node
 //https://developer.okta.com/blog/2017/03/30/react-okta-sign-in-widget
@@ -16,7 +16,7 @@ const User = require('../models/User');
 // @desc     Test route
 // @access   Public
 router.get('/', (req, res) => 
-  res.send('Sign in here')
+  res.send('Splash page...')
 );
 
 //@route    POST api/signin

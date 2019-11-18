@@ -10,8 +10,8 @@ const {
 } = require('express-validator');
 
 
-const userSchema = require('../models/User.js')
-const User = require('../models/User');
+const userSchema = require('../../models/User.js')
+const User = require('../../models/User');
 
 //@route    GET api/register
 //@desc     Test register a user route

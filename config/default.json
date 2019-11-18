@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://alan:alan@bittap-db-ea3yu.mongodb.net/bittapdb?retryWrites=true&w=majority",
+    "mongoURI": "mongodb+srv://alan:alan@bittap-db-ea3yu.mongodb.net/test?retryWrites=true&w=majority",
     "jwtSecret": "secret"
 }

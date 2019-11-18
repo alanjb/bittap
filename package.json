@@ -1,7 +1,9 @@
 {
   "name": "bittap",
   "version": "1.0.0",
+  "author": "alanjb",
   "description": "bittap source code",
+  "license": "MIT",
   "main": "index.js",
   "keywords": [
     "nodejs",
@@ -12,6 +14,8 @@
     "url": "git://github.com/alanjb/bittap"
   },
   "scripts": {
+    "dev": "nodemon ./index.js",
+    "start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -34,8 +38,6 @@
     "passport-google-oauth": "^2.0.0",
     "socket.io": "^2.3.0"
   },
-  "author": "alanjb",
-  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",

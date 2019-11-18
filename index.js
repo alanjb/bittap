@@ -1,5 +1,7 @@
-#!/usr/bin/env node
+'use strict';
 const express = require("express");
+const dotenv = require('dotenv');
+dotenv.config();
 const http = require('http');
 const socketIO = require("socket.io");
 const createError = require('http-errors');
@@ -12,14 +14,12 @@ const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 
 const app = express();
 
-require('dotenv').config({silent: true});
-
 let oktaClient = new okta.Client({
     orgUrl: 'https://dev-110361.okta.com',
     token: '009BGldlOf_3WGo17fW3JYcyud1cr8l6GG4wCRmCeC'
 });
   
-  const oidc = new ExpressOIDC({
+const oidc = new ExpressOIDC({
     issuer: "https://dev-110361.okta.com/oauth2/default",
     client_id: '0oa1iv6nay8bt3CBe357',
     client_secret: '18hkhl4Nl9M0-6a4AObtBQsQkFeJLBztENmle6f7',
@@ -34,7 +34,7 @@ let oktaClient = new okta.Client({
         defaultRedirect: "/dashboard"
       }
     }
-  });
+});
 
 // our server instance
 const server = http.createServer(app);
@@ -47,15 +47,12 @@ require('custom-env').env();
 require('dotenv').config({path: __dirname + '/.env'});
 const cors = require('cors');
 
-
-
 // conntect to database
-connectDB();
+// connectDB();
 
 // Init Middleware - get data in req.body
 app.use(express.json({ extended: false }));
 app.use(cors());
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -65,13 +62,11 @@ app.use(session({
   resave: true,
   saveUninitialized: false
 }));
-
 app.use(oidc.router);
 app.use((req, res, next) => {
     if (!req.userinfo) {
       return next();
     }
-   
     oktaClient.getUser(req.userinfo.sub)
       .then(user => {
         req.user = user;
@@ -84,9 +79,9 @@ app.use((req, res, next) => {
 
 // app.use(app.router);
 // routes.initialize(app);
-const signinRouter = require('./routes/signin');
-const registerRouter = require('./routes/register');
-const dashboardRouter = require('./routes/dashboard');
+const signinRouter = require('./routes/api/signin');
+const registerRouter = require('./routes/api/register');
+const dashboardRouter = require('./routes/api/dashboard');
 
 // Define Routes
 app.use('/', signinRouter);
@@ -142,7 +137,8 @@ io.on('connection', socket => {
 });
 
 // normalizePort is a safeguard function if port value is NaN or false
-const PORT = normalizePort(process.env.PORT || 8080);
+const PORT = process.env.PORT || 8080;
+
 
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
 

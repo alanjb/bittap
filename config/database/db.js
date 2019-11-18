@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 const config = require('config');
 const db_url = config.get('mongoURI');
 
-// console.log(process.env.DB_CONN);
-// console.log(db);
-
 //async function connect to MongoDB database
 const connectDB = async () => {
     try {
