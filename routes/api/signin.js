@@ -16,7 +16,7 @@ const User = require('../../models/User');
 // @desc     Test route
 // @access   Public
 router.get('/', (req, res) => 
-  res.send('Splash page...')
+  res.send('Landing page...')
 );
 
 //@route    POST api/signin

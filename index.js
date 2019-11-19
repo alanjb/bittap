@@ -1,7 +1,7 @@
 'use strict';
 const express = require("express");
 const dotenv = require('dotenv');
-dotenv.config();
+
 const http = require('http');
 const socketIO = require("socket.io");
 const createError = require('http-errors');
@@ -13,6 +13,7 @@ const okta = require("@okta/okta-sdk-nodejs");
 const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 
 const app = express();
+dotenv.config();
 
 let oktaClient = new okta.Client({
     orgUrl: 'https://dev-110361.okta.com',
@@ -48,7 +49,7 @@ require('dotenv').config({path: __dirname + '/.env'});
 const cors = require('cors');
 
 // conntect to database
-// connectDB();
+connectDB();
 
 // Init Middleware - get data in req.body
 app.use(express.json({ extended: false }));

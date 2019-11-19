@@ -1,18 +1,40 @@
 version: '3'
 
 services:
-  app: 
-    container_name: bittap
+  web:
+    container_name: mongo-express
     restart: always
     build: ./
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=db
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
     ports:
       - "8080:8080"
     volumes:
       - .:/app
-    links:
-      - mongo
+    networks:
+      - app-network
+    command: ./wait-for.sh db:27017 -- /app/node_modules/.bin/nodemon app.js 
+
   mongo:
-    container_name: mongo
     image: mongo
+    container_name: mongo
+    restart: always
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
     ports:
       - "27017:27017"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+  node_modules:
