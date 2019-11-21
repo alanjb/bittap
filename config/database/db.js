@@ -11,14 +11,14 @@ const {
 
 const options = {
     useNewUrlParser: true,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 500, 
-    connectTimeoutMS: 10000,
-    useCreateIndex: true,
-    useFindAndModify: false
+    reconnectTries: 60,
+    reconnectInterval: 1000,
+    poolSize: 10,
+    bufferMaxEntries: 0 // If not connected, return errors immediately rather than waiting for reconnect
 };
 
-const MONGO_DB_URL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
+//mongo db connection - ***need to add authentication
+const MONGO_DB_URL = `mongodb://mongo:${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
 
 //async function connect to MongoDB database
 const connectDB = async () => {

@@ -2,39 +2,64 @@ version: '3'
 
 services:
   web:
-    container_name: mongo-express
-    restart: always
-    build: ./
-    env_file: .env
-    environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=db
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB
-    ports:
-      - "8080:8080"
+    container_name: bittap-container
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/app
+    depends_on: 
+      - mongo
     networks:
       - app-network
-    command: ./wait-for.sh db:27017 -- /app/node_modules/.bin/nodemon app.js 
+    ports:
+      - "8080:8080"
+
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - web
+      - mongo
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email alan@example.com --agree-tos --no-eff-email --staging -d bittap.io  -d www.bittap.io
 
   mongo:
-    image: mongo
     container_name: mongo
-    restart: always
-    env_file: .env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    image: mongo
     ports:
       - "27017:27017"
 
+volumes:
+  certbot-etc:
+  certbot-var:
+  web-root:
+    driver: local
+    driver_opts:
+      type: none
+      device: /app
+      o: bind
+
 networks:
   app-network:
-    driver: bridge
-
-volumes:
-  dbdata:
-  node_modules:
+    driver: bridge 

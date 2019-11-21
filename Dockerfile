@@ -2,7 +2,7 @@
 FROM node:10
 
 # create a directory to hold the application code inside the image, this will be the working directory in the application
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Install nodemon for hot reload
 RUN npm install -g nodemon
