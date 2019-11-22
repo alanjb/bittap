@@ -1,20 +1,19 @@
 version: '3'
 
 services:
-  web:
+  app:
+    image: bittap-image
     container_name: bittap-container
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile
+    restart: always
+    build: .
     volumes:
       - .:/app
     depends_on: 
-      - mongo
+      - database
     networks:
       - app-network
     ports:
-      - "8080:8080"
+      - "80:8080"
 
   webserver:
     image: nginx:mainline-alpine
@@ -28,8 +27,8 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
     depends_on:
-      - web
-      - mongo
+      - app
+      - database
     networks:
       - app-network
 
@@ -42,11 +41,14 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email alan@example.com --agree-tos --no-eff-email --staging -d bittap.io  -d www.bittap.io
+    command: certonly --webroot --webroot-path=/var/www/html --email boyce.alan15@gmail.com --agree-tos --no-eff-email --staging -d bittap.io  -d www.bittap.io
 
-  mongo:
-    container_name: mongo
+  database:
     image: mongo
+    container_name: mongo
+    volumes:
+      - ./data/db:/data/db
+    restart: always
     ports:
       - "27017:27017"
 
