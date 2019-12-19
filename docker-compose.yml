@@ -1,67 +1,48 @@
 version: '3'
 
 services:
-  app:
-    image: bittap-image
-    container_name: bittap-container
-    restart: always
-    build: .
-    volumes:
-      - .:/app
-    depends_on: 
-      - database
-    networks:
-      - app-network
+  nodejs:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: nodejs
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=db
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB 
     ports:
       - "80:8080"
-
-  webserver:
-    image: nginx:mainline-alpine
-    container_name: webserver
-    restart: unless-stopped
-    ports:
-      - "80:80"
+    depends_on: 
+      - db
     volumes:
-      - web-root:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-    depends_on:
-      - app
-      - database
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
     networks:
       - app-network
+    command: ./wait-for.sh db:27017 -- /home/node/app/node_modules/.bin/nodemon index.js
 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - web-root:/var/www/html
-    depends_on:
-      - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email boyce.alan15@gmail.com --agree-tos --no-eff-email --staging -d bittap.io  -d www.bittap.io
-
-  database:
-    image: mongo
-    container_name: mongo
-    volumes:
-      - ./data/db:/data/db
-    restart: always
-    ports:
-      - "27017:27017"
-
-volumes:
-  certbot-etc:
-  certbot-var:
-  web-root:
-    driver: local
-    driver_opts:
-      type: none
-      device: /app
-      o: bind
+  db:
+    image: mongo:4.1.8-xenial
+    container_name: db
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:  
+      - dbdata:/data/db   
+    networks:
+      - app-network  
 
 networks:
   app-network:
-    driver: bridge 
+    driver: bridge
+
+volumes:
+  dbdata:
+  node_modules:  
