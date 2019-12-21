@@ -3,15 +3,18 @@ const express = require("express");
 const dotenv = require('dotenv');
 
 const http = require('http');
+// create socketio 
 const socketIO = require("socket.io");
 const createError = require('http-errors');
 const logger = require('morgan');
 const session = require("express-session");
 const normalizePort = require('normalize-port');
 
+// create okta 
 const okta = require("@okta/okta-sdk-nodejs");
 const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 
+//create express app
 const app = express();
 dotenv.config();
 
@@ -89,6 +92,7 @@ app.use('/', signinRouter);
 app.use('/register', loginRequired, registerRouter);
 app.use('/dashboard', dashboardRouter);
 
+// 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
