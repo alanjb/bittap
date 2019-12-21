@@ -113,7 +113,7 @@ app.get('/', (req, res) => res.send('Bittap is running...'));
 
 app.get('/test', (req, res) => {
     res.json({ profile: req.user ? req.user.profile : null });
-  });
+});
 
 function loginRequired(req, res, next) {
 if (!req.user) {
@@ -139,7 +139,6 @@ io.on('connection', socket => {
 
 // normalizePort is a safeguard function if port value is NaN or false
 const PORT = process.env.PORT || 8080;
-
 
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
 
