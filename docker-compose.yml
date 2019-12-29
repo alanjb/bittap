@@ -13,21 +13,21 @@ services:
       - MONGO_HOSTNAME=db
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB 
+    expose:
+      - "8080"
     ports:
-      - "81:8080"
+      - "8080:8080"
     depends_on: 
       - db
     volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
+      - ./:/usr/src/app
     networks:
       - app-network
-    command: ./wait-for.sh db:27017 -- /home/node/app/node_modules/.bin/nodemon index.js
 
   db:
     image: mongo:4.1.8-xenial
     container_name: db
-    restart: unless-stopped
+    restart: always
     env_file: .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
@@ -39,20 +39,20 @@ services:
     ports:
       - "27017:27017"
 
-  webserver:
+  nginx:
     image: nginx:mainline-alpine
-    container_name: webserver
+    container_name: nginx1
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - web-root:/var/www/html
-      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./nginx-conf:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
     depends_on:
       - nodejs
-      - db
     networks:
       - app-network
 
@@ -64,9 +64,9 @@ services:
       - certbot-var:/var/lib/letsencrypt
       - web-root:/var/www/html
     depends_on:
-      - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email boyce.alan15@gmail.com --agree-tos --no-eff-email --staging -d bittap.io  -d www.bittap.io
-#change device for linux box
+      - nginx
+    command: certonly --webroot --webroot-path=/var/www/html --email boyce.alan15@gmail.com --agree-tos --no-eff-email --force-renewal -d bittap.io  -d www.bittap.io
+
 volumes:
   certbot-etc:
   certbot-var:
