@@ -45,7 +45,7 @@ const server = http.createServer(app);
 // This creates our socket using the instance of the server
 const io = socketIO(server);
 
-const connectDB = require('./config/database/db.js');
+const connectDB = require('../../config/database/db.js');
 const path = require('path');
 require('custom-env').env();
 require('dotenv').config({path: __dirname + '/.env'});
@@ -83,9 +83,9 @@ app.use((req, res, next) => {
 
 // app.use(app.router);
 // routes.initialize(app);
-const signinRouter = require('./routes/api/signin');
-const registerRouter = require('./routes/api/register');
-const dashboardRouter = require('./routes/api/dashboard');
+const signinRouter = require('../../routes/api/signin');
+const registerRouter = require('../../routes/api/register');
+const dashboardRouter = require('../../routes/api/dashboard');
 
 // Define Routes
 app.use('/', signinRouter);
