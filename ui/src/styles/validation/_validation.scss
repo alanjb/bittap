@@ -1,0 +1,21 @@
+
+.validation-text{
+    color: $red; 
+    font-size: 10px;
+    text-align: left !important;
+    padding: none !important;
+    margin-top: 1px !important;
+    margin-bottom: 0rem !important;
+  }
+  
+  .validation-text.removeEmailValidation {
+    display: none;
+  }
+  
+  .validation-text.removePasswordValidation {
+    display: none;
+  }
+  
+  .validation-text.removePasswordConfirmValidation {
+    display: none;
+  }
