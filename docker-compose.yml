@@ -1,84 +1,48 @@
 version: '3'
 
 services:
-  nodejs:
-    build:  .
+  api:
+    build: .
     image: nodejs
     container_name: nodejs
     restart: always
     env_file: .env
-    environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=db
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB 
+    # environment:
+    #   - MONGO_USERNAME=$MONGO_USERNAME
+    #   - MONGO_PASSWORD=$MONGO_PASSWORD
+    #   - MONGO_HOSTNAME=db
+    #   - MONGO_PORT=$MONGO_PORT
+    #   - MONGO_DB=$MONGO_DB 
     expose:
       - "8080"
     ports:
       - "8080:8080"
-    depends_on: 
-      - db
+    # depends_on: 
+    #   - db
     volumes:
       - ./:/usr/src/app
     networks:
-      - app-network
+      - backend
 
-  db:
-    image: mongo:4.1.8-xenial
-    container_name: db
-    restart: always
-    env_file: .env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-    volumes:  
-      - dbdata:/data/db   
-    networks:
-      - app-network  
-    ports:
-      - "27017:27017"
-
-  nginx:
-    image: nginx:mainline-alpine
-    container_name: nginx1
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - web-root:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-    depends_on:
-      - nodejs
-    networks:
-      - app-network
-
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - web-root:/var/www/html
-    depends_on:
-      - nginx
-    command: certonly --webroot --webroot-path=/var/www/html --email boyce.alan15@gmail.com --agree-tos --no-eff-email --force-renewal -d bittap.io  -d www.bittap.io
+  # db:
+  #   image: mongo:4.1.8-xenial
+  #   container_name: db
+  #   restart: always
+  #   env_file: .env
+    # environment:
+      # - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      # - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    # volumes:  
+    #   - dbdata:/data/db   
+    # networks:
+    #   - backend 
+    # ports:
+    #   - "27017:27017"
 
 volumes:
-  certbot-etc:
-  certbot-var:
-  web-root:
-    driver: local
-    driver_opts:
-      type: none
-      device: /Users/test
-      o: bind
-  dbdata: 
+  # dbdata: 
   node_modules:  
 
 networks:
-  app-network:
+  backend:
     driver: bridge

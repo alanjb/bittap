@@ -19,8 +19,9 @@ class SignInModal extends React.Component {
             <React.Fragment>
                 <div className={signInModalClasses}>
                     <div className="signinmodal-component signinwithgoogle">
-                        <a href="https://dev-110361.okta.com/oauth2/v1/authorize?idp=0oa1mwheghj9OY4wH357&client_id=0oa1k8lnfkw8m28jq357&response_type=id_token&response_mode=fragment&scope= openid email&redirect_uri=https://www.bittapfinancial.com&state=102219&nonce=102219">
-                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        <a href="https://dev-110361.okta.com/oauth2/v1/authorize?idp=0oa2ei4u0toSEXE0x357&client_id=0oa2eraf6jA4etZqH357&response_type=id_token&response_mode=fragment&scope=openid&redirect_uri=http://localhost:3000/dashboard&state=123&nonce=456">
+                        Sign in with Google
+                            {/* <div className="g-signin2" data-onsuccess="onSignIn"></div> */}
                         </a>
                         {/* <NavLink to="/dashboard"> Sign in </NavLink> */}
 

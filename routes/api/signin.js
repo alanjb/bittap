@@ -7,11 +7,6 @@ const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
 
-//https://developer.okta.com/blog/2018/08/17/build-and-understand-user-authentication-in-node
-//https://developer.okta.com/blog/2017/03/30/react-okta-sign-in-widget
-//https://developer.okta.com/blog/2018/02/06/build-user-registration-with-node-react-and-okta
-//https://developer.okta.com/blog/2019/09/11/angular-mongodb
-
 // @route    GET api/signin
 // @desc     Test route
 // @access   Public

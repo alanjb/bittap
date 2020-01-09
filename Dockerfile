@@ -3,6 +3,8 @@ FROM node:10
 
 RUN npm install -g nodemon
 
+RUN mkdir -p /usr/src/app
+
 # create a directory to hold the application code inside the image, this will be the working directory in the application
 WORKDIR /usr/src/app
 
