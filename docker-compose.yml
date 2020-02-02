@@ -1,46 +1,51 @@
 version: '3'
-
 services:
-  api:
-    build: .
-    image: nodejs
-    container_name: nodejs
+  ui:
+    build: 
+      dockerfile: Dockerfile
+      context: ./ui
+    image: bittap_app_image
+    container_name: bittap_app_container
     restart: always
-    env_file: .env
-    # environment:
-    #   - MONGO_USERNAME=$MONGO_USERNAME
-    #   - MONGO_PASSWORD=$MONGO_PASSWORD
-    #   - MONGO_HOSTNAME=db
-    #   - MONGO_PORT=$MONGO_PORT
-    #   - MONGO_DB=$MONGO_DB 
     expose:
-      - "8080"
+      - "3000"
     ports:
-      - "8080:8080"
-    # depends_on: 
-    #   - db
+      - "3000:3000"
     volumes:
       - ./:/usr/src/app
     networks:
       - backend
 
-  # db:
-  #   image: mongo:4.1.8-xenial
-  #   container_name: db
-  #   restart: always
-  #   env_file: .env
-    # environment:
-      # - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-      # - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-    # volumes:  
-    #   - dbdata:/data/db   
-    # networks:
-    #   - backend 
-    # ports:
-    #   - "27017:27017"
+  api:
+    build: 
+      dockerfile: Dockerfile
+      context: ./api
+    image: "bittap-api"
+    container_name: "bittap-api"
+    restart: always
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    volumes:
+      - /app/node_modules 
+      - ./:/usr/src/app
+    networks:
+      - backend
+
+  webserver:
+    container_name: bittap_nginx_container
+    image: nginx:latest
+    restart: always
+    ports: 
+      - "80:80"
+      - "443:443"
+    volumes: 
+      - ./nginx:/etc/nginx/conf.d/default.conf
+    networks: 
+      backend
 
 volumes:
-  # dbdata: 
   node_modules:  
 
 networks:
