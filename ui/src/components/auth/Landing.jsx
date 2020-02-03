@@ -14,6 +14,13 @@ export default class Landing extends React.Component {
             error: null,
         };
     }
+
+    // sendMessage = e => {
+    //     e.preventDefault();
+    //     const message = { message: e.target.elements.message.value };
+    //     axios.post("/api/message", message);
+    //     e.target.elements.message.value = "";
+    // }
       
     onSignIn = (googleUser) => {
         console.log(googleUser)

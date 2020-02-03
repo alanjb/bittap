@@ -7,9 +7,9 @@ const createError = require('http-errors');
 const logger = require('morgan');
 const session = require("express-session");
 const normalizePort = require('normalize-port');
-const server = http.createServer(app);
 const app = express();
-const connectDB = require('../config/database/db.js');
+const server = http.createServer(app);
+const connectDB = require('/config');
 const path = require('path');
 const dashboardRouter = require('./src/dashboard/dashboard');
 const cors = require('cors');
@@ -26,6 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/dashboard', dashboardRouter);
 app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
@@ -42,6 +43,11 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 app.get('/', (req, res) => res.send('Bittap is running!!!!!'));
+
+app.post('/api/message', (req, res) => {
+    console.log(req.body.message);
+    res.end();
+});
 
 const PORT = process.env.PORT || 8080;
 
