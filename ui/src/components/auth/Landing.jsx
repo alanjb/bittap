@@ -15,13 +15,6 @@ export default class Landing extends React.Component {
         };
     }
 
-    // sendMessage = e => {
-    //     e.preventDefault();
-    //     const message = { message: e.target.elements.message.value };
-    //     axios.post("/api/message", message);
-    //     e.target.elements.message.value = "";
-    // }
-      
     onSignIn = (googleUser) => {
         console.log(googleUser)
         let profile = googleUser.getBasicProfile();
@@ -34,11 +27,25 @@ export default class Landing extends React.Component {
         // return profile.getName();
     };
 
+    sendMessage = e => {
+        e.preventDefault();
+        const message = { message: e.target.elements.message.value };
+        axios.post("/api/message", message);
+        console.log(e.target.elements.message.value)
+        e.target.elements.message.value = "";
+        
+    }
+
     render() {    
         return (
           <div className="Landing-Component">
               <Container>
                 <h1 className="large-header">welcome</h1>
+                <br/><br/> 
+                <form onSubmit={e => this.sendMessage(e)}>
+                    <Input type="text" placeholder="Enter your name..." id="message" name="message" />
+                    <Button type="submit">Send</Button>
+                </form>
               </Container>
           </div>
         );

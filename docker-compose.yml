@@ -1,50 +1,41 @@
 version: '3'
 services:
-  ui:
-    build: 
-      dockerfile: Dockerfile
-      context: ./ui
-    restart: always
-    expose:
-      - "3000"
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./:/usr/src/app
-      - ./ui:/app
-    networks:
-      - backend
-
   api:
+    container_name: development_api
     build: 
       dockerfile: Dockerfile
       context: ./api
-    restart: always
-    expose:
-      - "8080"
-    ports:
-      - "8080:8080"
     volumes:
       - /app/node_modules 
-      - ./:/usr/src/app
-    networks:
-      - backend
+      - ./api:/app
+    expose:
+      - '8081'
+    ports: 
+      - '8081:8081'
 
-  webserver:
+  nginx:
+    container_name: development_nginx
     restart: always
     build:
       dockerfile: Dockerfile
       context: ./nginx
+    expose: 
+      - '80'
     ports: 
-      - "80:80"
-      - "443:443"
-      - '5000:80'
-    networks: 
-      - backend
-
-volumes:
-  node_modules:  
-
-networks:
-  backend:
-    driver: bridge
+      - '80:80'
+    depends_on:
+      - api
+      - ui
+    
+  ui:
+    container_name: development_ui
+    build: 
+      dockerfile: Dockerfile
+      context: ./ui
+    volumes:
+      - /app/node_modules 
+      - ./ui:/app
+    expose:
+      - '3000'
+    ports: 
+      - '3000:3000'
