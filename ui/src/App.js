@@ -1,13 +1,10 @@
 import * as React from 'react';
-import Register from './components/auth/Register';
-import SignIn from './components/auth/SignIn';
-import Landing from './components/auth/Landing';
+import Splash from './components/auth/Splash';
 import Dashboard from './components/dashboard/Dashboard';
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import { Container, Row, Col } from "reactstrap";
-// import IndexSidePanel from './components/articles/IndexSidePanel';
 
 class App extends React.Component {
   render(){
@@ -23,7 +20,7 @@ class App extends React.Component {
                 <Row>
                   <Col>
                     <Switch>
-                      <Route exact path="/" component={Landing} />    
+                      <Route exact path="/" component={Splash} />    
                       <Route path="/dashboard" component={Dashboard} />                      
                     </Switch>
                   </Col>

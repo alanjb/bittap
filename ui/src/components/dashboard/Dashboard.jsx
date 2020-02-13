@@ -2,7 +2,6 @@ import * as React from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Container, Form, FormGroup, Input} from 'reactstrap';
-import socketIOClient from 'socket.io-client';
 import { InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import ServerCard from '../layout/ServerCard';
 
@@ -10,8 +9,7 @@ class Dashboard extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      response: false,
-      endpoint: "http://127.0.0.1:4001"
+
     };
   }
 

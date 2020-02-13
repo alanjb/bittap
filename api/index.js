@@ -19,20 +19,11 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     next();
 });
- 
-if(process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build')); 
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-} else {
-    app.use(express.static(__dirname + '/public'));
-}
 
+//localhost:8081/test
 app.get('/', (req, res) => res.send('Bittap is running!'));
 
 app.post('/api/message', (req, res) => {
-    alert(req.body.message);
     console.log(req.body.message);
     res.end();
 });

@@ -14,15 +14,14 @@ services:
       - '8081:8081'
 
   nginx:
+    image: nginx:latest
     container_name: development_nginx
+    volumes:
+      - ./default.conf:/etc/nginx/default.conf
     restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
-    expose: 
-      - '80'
-    ports: 
-      - '80:80'
+    ports:
+      - 80:80
+      - 443:443
     depends_on:
       - api
       - ui
