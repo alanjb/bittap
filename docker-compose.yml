@@ -1,40 +1,23 @@
 version: '3'
-services:
-  api:
-    container_name: development_api
-    build: 
-      dockerfile: Dockerfile
-      context: ./api
-    volumes:
-      - /app/node_modules 
-      - ./api:/app
-    expose:
-      - '8081'
-    ports: 
-      - '8081:8081'
 
-  nginx:
-    image: nginx:latest
-    container_name: development_nginx
-    volumes:
-      - ./default.conf:/etc/nginx/default.conf
-    restart: always
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - api
-      - ui
-    
-  ui:
-    container_name: development_ui
-    build: 
-      dockerfile: Dockerfile
-      context: ./ui
-    volumes:
-      - /app/node_modules 
-      - ./ui:/app
-    expose:
-      - '3000'
-    ports: 
-      - '3000:3000'
+services:
+    ui: 
+        build: ./ui
+        volumes: 
+            - ./ui:/app
+        networks:
+            - app-network
+        ports:
+            - "3000:3000"
+
+    api:
+        build: ./api
+        volumes:
+            - ./api:/app
+        ports:
+          - '5000:5000'
+        networks:
+        - app-network
+        
+networks:
+    app-network:

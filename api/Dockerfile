@@ -1,9 +1,6 @@
-FROM node:10
+FROM node:13.8.0-alpine3.11
 LABEL Alan Boyce "boyce.alan15@gmail.com"
-RUN npm install -g nodemon
 WORKDIR /app
-COPY package.json .
-RUN npm install
 COPY . .
-EXPOSE 8080
+RUN npm install
 CMD [ "npm", "run", "dev"]

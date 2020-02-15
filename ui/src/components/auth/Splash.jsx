@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Button, Container, Form, FormGroup, Input} from 'reactstrap'; 
 
+
 //https://developers.google.com/identity/sign-in/web/reference#gapiauth2getauthinstance
 
 export default class Splash extends React.Component {
@@ -16,7 +17,7 @@ export default class Splash extends React.Component {
     sendMessage = e => {
         e.preventDefault();
         const message = { message: e.target.elements.message.value };
-        axios.post("/api/message", message);
+        axios.post("http://localhost:5000/api/message", message);
         console.log(e.target.elements.message.value)
         e.target.elements.message.value = "";
     }

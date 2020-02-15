@@ -1,8 +1,5 @@
-FROM node:alpine
-LABEL Alan Boyce "boyce.alan15@gmail.com"
+FROM node:13.8.0-alpine3.11
 WORKDIR /app
-COPY package.json .
+COPY . .
 RUN npm install 
-COPY . . 
-EXPOSE 3000
 CMD ["npm", "run", "start"]
