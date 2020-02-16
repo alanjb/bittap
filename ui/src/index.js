@@ -11,7 +11,7 @@ import './styles/index.scss';
 import store from "./redux/store";
 
 document.title = `Bittap`;
-const rootElement = document.getElementById('root')
+const rootElement = document.getElementById('root');
 ReactDOM.render(
   <Router>
       <Provider store={store}>
