@@ -7,21 +7,24 @@ export class DataStreamRoute {
   public route(app:any): void { 
     app.route('/dashboard')
       .get((req: Request, res: Response, next: NextFunction) => {
-
-
-      })  
-      .then((res: Response) => {
+        res.status(200).send({
           
-      })
-      .catch((error:any) => {
-        window.alert("Error: " + error);
-      })
+        })
+        this.init();
+      })  
   }
 
   private init() {
     const { spawn } = require('child_process');
+    //create child process in current working directory which is /api
     spawn('sh', ['./api/bin/realtime.sh'], {
       cwd: './api'
-    }); 
+    })
+    .then((res: Response) => {
+          
+    })
+    .catch((error:any) => {
+      window.alert("Error: " + error);
+    })
   }
 }
