@@ -1,6 +1,5 @@
-#!api/bin/bash
+#!/bin/sh
 
-start() {
+init() {
   echo "Starting realtime monitoring service..."
 }
-

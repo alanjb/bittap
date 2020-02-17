@@ -1,19 +1,21 @@
+import express from 'express';
 import * as path from 'path';
-import * as express from 'express';
-import * as logger from 'morgan';
+import logger = require('morgan');
 import * as bodyParser from 'body-parser';
+import { Routes } from "./routes/index";
 
 // Creates and configures an ExpressJS web server.
 class App {
 
   // ref to Express instance
-  public express: express.Application
+  public express: express.Application;
+  public router: Routes = new Routes();
 
   //Run configuration methods on the Express instance.
   constructor() {
-    this.express = express()
-    this.middleware()
-    this.routes()
+    this.express = express();
+    this.middleware();
+    this.router.routes(this.express);   
   }
 
   // Configure Express middleware.
@@ -21,23 +23,13 @@ class App {
     this.express.use(logger('dev'))
     this.express.use(bodyParser.json())
     this.express.use(bodyParser.urlencoded({extended: false}))
-    this.express.use((req, res, next) => {
+    this.express.use(function(req, res, next) {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
       res.header('Access-Control-Allow-Headers', 'Content-Type');
       next();
     })
   }
-
-  // Configure API endpoints.
-  private routes(): void {
-    /* This is just to get up and running, and to make sure what we've got is
-     * working so far. This function will change when we start to add more
-     * API endpoints */
-
-    this.express.use('/datastream', require('./controllers/datastream'));
-  }
-
 }
 
 export default new App().express
