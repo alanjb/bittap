@@ -2,20 +2,20 @@ import express from 'express';
 import * as path from 'path';
 import logger = require('morgan');
 import * as bodyParser from 'body-parser';
-import { Routes } from "./routes/index";
+import { Routes } from "./routes/route.datastream";
 
 // Creates and configures an ExpressJS web server.
 class App {
 
   // ref to Express instance
   public express: express.Application;
-  public router: Routes = new Routes();
+  public route: Routes = new Routes();
 
   //Run configuration methods on the Express instance.
   constructor() {
     this.express = express();
     this.middleware();
-    this.router.routes(this.express);   
+    this.route.routes(this.express);   
   }
 
   // Configure Express middleware.

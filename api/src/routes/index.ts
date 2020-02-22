@@ -1,1 +1,0 @@
-export { default as DataStreamRoute } from "./streaming/route.datastream";
