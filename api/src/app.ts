@@ -2,7 +2,7 @@ import express from 'express';
 import * as path from 'path';
 import logger = require('morgan');
 import * as bodyParser from 'body-parser';
-import { Routes } from "./routes/route.datastream";
+import { Routes } from "./datastream/route.datastream";
 
 // Creates and configures an ExpressJS web server.
 class App {
